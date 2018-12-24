@@ -1,0 +1,11 @@
+## 1. SETTING ENV
+- include_tasks: tasks/setting-env.yml
+
+## 2. INSTALL UTILS
+- include_tasks: tasks/install-utils.yml
+
+## 3. INSTALL DOCKER
+- include_tasks: tasks/install-docker.yml
+
+## 4. INSTALL KUBERNETES
+- include_tasks: tasks/install-kubernetes.yml

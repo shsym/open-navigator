@@ -1,0 +1,57 @@
+## + File Info
+- file_info:
+    archive:
+      image: "images.tar.gz"
+      package: "packages.tar.gz"
+      config: "config.tar.gz"
+    dir:
+      base: "/tmp/epp-installation"
+      base_file: "/tmp/epp-installation/files"
+      base_config: "/tmp/epp-installation/files/config"
+      base_registry: "/opt/ahnlab/epp/registry"
+      base_registry_ssl: "/opt/ahnlab/epp/registry/certs"
+      base_epp: "/opt/ahnlab/epp"
+      kubernetes: "kubernetes-v1.12.1"
+      docker: "docker-v18.06.1-ce"
+      ansible: "ansible-v2.4.2.0"
+      utils: "utils"
+    file:
+      k8s_master_image: "k8s-master-v1.12.1.tar"
+      k8s_node_image: "k8s-node-v1.12.1.tar"
+      registry_image: "docker-registry.tar"
+      docker_system_config: "/etc/docker/config.json"
+      sh_join: "/tmp/join.sh"
+
+## + Network Info
+- network_info:
+    cni:
+      flannel:
+          config: "kubernetes_kube-flannel.yml"
+          cidr: "10.244.0.0/16"
+    firewall:
+      common:
+        service:
+          - http
+          - https
+        port:
+          - 8001/tcp
+      master:
+        port:
+          - 6443/tcp
+          - 2379-2380/tcp
+          - 10250-10252/tcp
+          - 5000/tcp
+          - 8001/tcp
+      node:
+        port:
+          - 10250/tcp
+          - 30000-32767/tcp
+
+## + Container Info
+- container_info:
+    registry:
+      name: "registry"
+      version: "latest"
+      publish_hosts:
+        host1: "{{ master_ip }}"
+        host2: "localhost"

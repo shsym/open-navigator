@@ -1,0 +1,62 @@
+{
+  "name": "kube-navigator",
+  "version": "1.0.1.1",
+  "description": "",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "eslint": "node ./node_modules/eslint/bin/eslint ./",
+    "prestart": "",
+    "start": "",
+    "start-dev": "",
+    "pretest": "",
+    "test": "",
+    "test-with-logs": "",
+    "serve-dev": "",
+    "serve-stub": ""
+  },
+  "repository": {
+    "type": "svn",
+    "url": ""
+  },
+  "author": "SungHyun Kim <sunghyun.kim03@ahnlab.com>",
+  "bugs": {
+    "url": "",
+    "email": "sunghyun.kim03@ahnlab.com"
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "body-parser": "^1.18.2",
+    "captchapng": "0.0.1",
+    "connect-redis": "^3.3.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.7.1",
+    "csurf": "^1.9.0",
+    "dateformat": "^2.0.0",
+    "debug": "~2.2.0",
+    "ejs": "^2.4.1",
+    "elasticsearch": "^10.1.3",
+    "express": "~4.13.4",
+    "express-domain-middleware": "^0.1.0",
+    "express-session": "^1.13.0",
+    "helmet": "^2.1.2",
+    "http-proxy": "^1.13.2",
+    "jsonlint": "^1.6.2",
+    "jsonpointer": "^4.0.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.13.0",
+    "morgan": "^1.9.0",
+    "request": "^2.81.0",
+    "restify": "^4.3.0",
+    "restify-plugins": "^1.6.0",
+    "restify-router": "^0.4.2",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "should": "^11.2.1",
+    "supertest": "^3.0.0"
+  }
+}

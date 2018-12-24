@@ -1,0 +1,34 @@
+## + Set "permissive mode" on SELinux
+- name: Set "permissive mode" on SELinux
+  lineinfile:
+    path: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: 'SELINUX=permissive'
+- command: setenforce 0
+
+
+## + Apply "iptables rules for bridge network" to `Netfilter`
+- name: Apply "iptables rules for bridge network" to `Netfilter`
+  copy:
+    dest: '/etc/sysctl.d/k8s.conf'
+    content: |
+      net.bridge.bridge-nf-call-iptables = 1
+      net.bridge.bridge-nf-call-ip6tables = 1
+
+
+## + Set "swapoff -a"
+- name: Set "swapoff" permenetly
+  command: swapoff -a
+- lineinfile:
+    path: /etc/rc.d/rc.local
+    mode: 0755
+    line: 'swapoff -a'
+    insertbefore: last
+
+## + Set "kubelet restart"
+- name : Set "kubelet restart" to set up a new configmap, secret
+  lineinfile:
+    path: /etc/rc.d/rc.local
+    mode: 0755
+    line: 'systemctl restart kubelet'
+    insertbefore: last

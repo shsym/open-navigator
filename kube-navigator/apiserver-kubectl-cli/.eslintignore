@@ -1,0 +1,15 @@
+/node_modules/**
+/src/**
+/public/**
+/views/**
+/test/common/unit-test/data/*
+/test/common/black-box-test/data/*
+/test/server/unit-test/data/*
+/test/server/black-box-test/data/*
+/test/aid/unit-test/data/*
+/test/aid/black-box-test/data/*
+/tools/*
+/tools/**
+/*.sh
+/*.json
+/.*

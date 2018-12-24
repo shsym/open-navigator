@@ -1,0 +1,13 @@
+version: '3.2'
+services:
+  epp-pgbouncer-edrolap:
+    container_name: epp-${img_name}-${target_type}-${cont_postfix}${cont_num}
+    image: epp-${img_name}:${img_ver}
+    user: ${cont_user}
+    command: ${cmd_val}
+    privileged: true
+    ports:
+      - ${host_port}:${cont_port}
+    volumes:
+      - ${vol_from_service_conf}:${vol_to_service_conf}
+      - ${vol_from_service_log}:${vol_to_service_log}

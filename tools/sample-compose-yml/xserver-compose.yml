@@ -1,0 +1,20 @@
+version: '3.2'
+services:
+  epp-xserver:
+    container_name: epp-${img_name}-${cont_postfix}${cont_num}
+    image: epp-${from_img_name}:${from_img_ver}
+    user: ${cont_user}
+    command: ${cmd_val}
+    privileged: true
+    ports:
+      - ${host_xserver_nonssl_port}:${cont_xserver_nonssl_port}
+      - ${host_xserver_ssl_port}:${cont_xserver_ssl_port}
+    volumes:
+      - ${vol_from_os_tmp}:${vol_to_os_tmp}
+      - ${vol_from_epp_etc}:${vol_to_epp_etc}
+      - ${vol_from_epp_log}:${vol_to_epp_log}
+      - ${vol_from_epp_run}:${vol_to_epp_run}
+      - ${vol_from_epp_pkgroot}:${vol_to_epp_pkgroot}
+      - ${vol_from_epp_tmp}:${vol_to_epp_tmp}
+      - ${vol_from_ems}:${vol_to_ems}
+      - ${vol_from_fstab}:${vol_to_fstab}

@@ -1,0 +1,11 @@
+## 1. INSTALL KUBERNETES
+- include_tasks: tasks/setting-kubernetes.yml
+
+## 2. INSTALL PRIVATE DOCKER REGISTRY
+- include_tasks: tasks/setting-docker-registry.yml
+
+## 3. SETTING INIT EPP DOMAIN on Master
+- include_tasks: tasks/setting-init-services.yml
+
+## 4. INSTALL FINALE
+- include_tasks: tasks/setting-finale.yml

@@ -1,0 +1,8 @@
+## 1. INSTALL KUBERNETES
+- include_tasks: tasks/setting-kubernetes.yml
+
+## 2. SETTING INIT EPP DOMAIN on Node
+- include_tasks: tasks/setting-init-services.yml
+
+## 3. INSTALL FINALE
+- include_tasks: tasks/setting-finale.yml

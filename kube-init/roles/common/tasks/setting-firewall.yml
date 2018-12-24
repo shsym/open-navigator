@@ -1,0 +1,59 @@
+## + Common
+- name: Start firewalld service
+  systemd:
+    name: firewalld
+    enabled: yes
+    state: started
+    masked: no
+    daemon_reload: yes
+
+
+- name: Add common ports and services
+  firewalld:
+    service: "{{ item }}"
+    permanent: true
+    zone: public
+    state: enabled
+    immediate: yes
+  with_items: "{{ network_info.firewall.common.service }}"
+  notify: reload firewalld
+
+
+- name: Add ports and services
+  firewalld:
+    port: "{{ item }}"
+    permanent: true
+    zone: public
+    state: enabled
+    immediate: yes
+  with_items: "{{ network_info.firewall.common.port }}"
+  notify: reload firewalld
+
+
+## + When Master
+### - Kubernetes
+- name: Add ports and services for only master
+  firewalld:
+    port: "{{ item }}"
+    permanent: true
+    zone: public
+    state: enabled
+    immediate: yes
+  with_items: "{{ network_info.firewall.master.port }}"
+  notify: reload firewalld
+  when:
+  - type == "master"
+
+
+## + When Node
+- name: Add ports and services for only node
+  firewalld:
+    port: "{{ item }}"
+    permanent: true
+    zone: public
+    state: enabled
+    immediate: yes
+  with_items: "{{ network_info.firewall.node.port }}"
+  notify: reload firewalld
+  when:
+  - type == "node"

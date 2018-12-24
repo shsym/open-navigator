@@ -1,0 +1,30 @@
+version: '3.2'
+services:
+  epp-mongo-eppnosql:
+    container_name: epp-${img_name}-${target_type}-${cont_postfix}${cont_num}
+    build:
+      context: ./
+      dockerfile: epp-${img_name}-${target_type}-dockerfile
+      args:
+        - epp_path=${epp_path}
+        - epp_user=${epp_user}
+        - epp_uid=${epp_uid}
+        - img_name=${img_name}
+        - unit_dir=${unit_dir}
+    image: epp-${img_name}-${target_type}:${img_ver}
+    command: tail -f /dev/null
+    privileged: true
+#    ports:
+#      - ${host_configsvr1_port}:${cont_configsvr1_port}
+#      - ${host_configsvr2_port}:${cont_configsvr2_port}
+#      - ${host_configsvr3_port}:${cont_configsvr3_port}
+#      - ${host_shardsvr_port}:${cont_shardsvr_port}
+#      - ${host_mongos_port}:${cont_mongos_port}
+    volumes:
+      - ${vol_from_os_tmp}:${vol_to_os_tmp}
+      - ${vol_from_etc}:${vol_to_etc}
+#      - ${vol_from_tmp}:${vol_to_tmp}
+#      - ${vol_from_db}:${vol_to_db}
+#      - ${vol_from_save}:${vol_to_save}
+#      - ${vol_from_epp_etc}:${vol_to_epp_etc}
+

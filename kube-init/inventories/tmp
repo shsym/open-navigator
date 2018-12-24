@@ -1,0 +1,10 @@
+[vagrant-node]
+192.200.10.12 ip=192.200.10.12 type=node hostname=node2 user=vagrant user_pw=vagrant su_pw=vagrant registry_set=false registry_ip=192.200.10.10
+192.200.10.13 ip=192.200.10.13 type=node hostname=node3 user=vagrant user_pw=vagrant su_pw=vagrant registry_set=false registry_ip=192.200.10.10
+
+[vagrant-node:vars]
+ansible_connection=ssh
+
+
+[localhost]
+localhost   ansible_connection=local

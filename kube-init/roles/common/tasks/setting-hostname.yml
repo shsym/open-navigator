@@ -1,0 +1,11 @@
+## + Set "hostname"
+- name: Set "hostname"
+  shell: "hostnamectl set-hostname '{{ hostname }}'"
+
+
+## + Append "hostname" at "/etc/hosts"
+- name: Append "a string" to thd end
+  lineinfile:
+    path: '{{ path }}'
+    line: '{{ string }}'
+    insertbefore: last

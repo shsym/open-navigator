@@ -1,0 +1,50 @@
+## + Load "images" on `master`
+- name: Load "images" on master
+  shell: 'docker image load -i {{ item }}'
+  with_items:
+    - '{{ file_info.dir.base_file }}/{{ file_info.file.k8s_master_image }}'
+    - '{{ file_info.dir.base_file }}/{{ file_info.file.registry_image }}'
+
+
+## + Set "enable" and "start" by using systemctl
+- name: Start kubelet service
+  systemd:
+    name: kubelet
+    enabled: yes
+    state: started
+
+
+## + Init `kubeadm`
+- name: Init `kubeadm` (Start master)
+  shell: |
+    kubeadm init --apiserver-advertise-address={{ ip }} --pod-network-cidr={{ network_info.cni.flannel.cidr }}
+  register: init_stream_output
+
+
+## + Make and Fetch `join.sh` including the master token
+- name: Make `join.sh`
+  copy:
+    dest: '{{ file_info.file.sh_join }}'
+    content: '{{ init_stream_output.stdout_lines | last }}'
+    mode: 0755
+
+
+- name: Fetch `join.sh` from remote to local(ansible)
+  fetch:
+    src: '{{ file_info.file.sh_join }}'
+    dest: '{{ file_info.file.sh_join }}'
+    flat: yes
+
+
+## + Setting `authorization`
+- name : Setting `authorization`
+  shell: |
+    rm -rf $HOME/.kube
+    mkdir -p $HOME/.kube
+    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+## + Apply `flannel` for CNI
+- name: Apply `flannel` for CNI
+  shell: |
+    kubectl apply -f {{ file_info.dir.base_config }}/{{ network_info.cni.flannel.config }}

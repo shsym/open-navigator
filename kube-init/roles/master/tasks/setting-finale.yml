@@ -1,0 +1,8 @@
+- name: Delete all files
+  file:
+    path: "{{ file_info.dir.base }}"
+    state: "absent"
+
+- name: Delete all histories
+  shell: "history -c; rm -rf ~/.*_history"
+  ignore_errors: yes

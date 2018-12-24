@@ -1,0 +1,32 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
+    "extends": "airbnb-base",
+    "env": {
+        "browser": true,
+        "node": true,
+        "mocha": true
+    },
+    "rules": {
+        "camelcase": 0,
+        "max-len": 0,
+        "no-shadow": 0,
+        "no-underscore-dangle": 0,
+        "no-param-reassign": 0,
+        "no-useless-escape": 0,
+        "no-eval": 0,
+        "prefer-destructuring": ["error", {
+            "AssignmentExpression": {
+                "array": false,
+                "object": true
+            }
+        }]
+    },
+    "plugins": ["import"],
+    "globals": {
+        "jQuery": true,
+        "$": true
+    }
+}

@@ -1,0 +1,12 @@
+## + SSL Certification
+- name: Set `SSL/TLS`
+  copy:
+    src: "{{ role_path }}/files/certs"
+    dest: "{{ file_info.dir.base_registry }}"
+  when: registry_set
+
+## + Create "Docker Registry Container" on master
+- name: Create "Docker Registry Container" on master
+  shell: |
+    docker run -d -p 5000:5000 -v /opt/ahnlab/epp/registry:/var/lib/registry -v /opt/ahnlab/epp/registry/certs:/certs -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/server.crt -e REGISTRY_HTTP_TLS_KEY=/certs/server.key --restart always --name private_epp_registry registry:latest
+  when: registry_set
