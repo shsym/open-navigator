@@ -1,0 +1,32 @@
+[epp-master]
+172.21.30.179 ip=172.21.30.179 type=master hostname=master user=root user_pw=qwe123! su_pw=qwe123! registry_set=true registry_ip=172.21.30.179
+
+[epp:vars]
+ansible_connection=ssh
+
+
+[epp-node]
+172.21.30.180 ip=172.21.30.180 type=node hostname=node1 user=root user_pw=qwe123! su_pw=qwe123! registry_set=false registry_ip=172.21.30.179
+
+[epp-node:vars]
+ansible_connection=ssh
+
+
+[vagrant-master]
+192.200.10.10 ip=192.200.10.10 type=master hostname=master user=vagrant user_pw=vagrant su_pw=vagrant registry_set=true registry_ip=192.200.10.10
+
+[vagrant-master:vars]
+ansible_connection=ssh
+
+
+[vagrant-node]
+192.200.10.11 ip=192.200.10.11 type=node hostname=node1 user=vagrant user_pw=vagrant su_pw=vagrant registry_set=false registry_ip=192.200.10.10
+192.200.10.12 ip=192.200.10.12 type=node hostname=node2 user=vagrant user_pw=vagrant su_pw=vagrant registry_set=false registry_ip=192.200.10.10
+192.200.10.13 ip=192.200.10.13 type=node hostname=node3 user=vagrant user_pw=vagrant su_pw=vagrant registry_set=false registry_ip=192.200.10.10
+
+[vagrant-node:vars]
+ansible_connection=ssh
+
+
+[localhost]
+localhost   ansible_connection=local

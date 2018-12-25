@@ -1,0 +1,24 @@
+## + Load "images" on `node`
+- name: Load "images" on node
+  shell: 'docker image load -i {{ item }}'
+  with_items:
+    - '{{ file_info.dir.base_file }}/{{ file_info.file.k8s_node_image }}'
+
+
+## + Copy and Execute `join.sh` including the master token
+- name: Copy `join.sh`
+  copy:
+    src: '{{ file_info.file.sh_join }}'
+    dest: '{{ file_info.file.sh_join }}'
+    mode: 0755
+
+
+- name: Execute `join.sh`
+  shell: '{{ file_info.file.sh_join }}'
+
+
+## + Set "enable" and "start" by using systemctl
+- name: Start kubelet service
+  systemd:
+    name: kubelet
+    enabled: yes

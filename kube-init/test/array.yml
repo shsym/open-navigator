@@ -1,0 +1,33 @@
+# [ Last Item ]
+## Print the last item in Array (type 1)
+- name: Print the last item in Array (type 1)
+  debug: var=stdout_lines[-1]
+  vars:
+    stdout_lines: [
+      "[init] using Kubernetes version: v1.12.1",
+      "[preflight] running pre-flight checks"
+    ]
+
+## Print the last item in Array (type 2)
+- name: Print the last item in Array (type 2)
+  debug:
+    msg: "{{ stdout_lines | first }}"
+  vars:
+    stdout_lines: [
+      "[init] using Kubernetes version: v1.12.1",
+      "[preflight] running pre-flight checks"
+    ]
+
+## Register and Execute the last item in Array (type 3)
+- name: Register the last item in Array (type 3)
+  debug:
+    msg: "{{ stdout_lines | first }}"
+  vars:
+    stdout_lines: [
+      "  echo 1",
+      "  cat something"
+    ]
+  register: output
+
+- name: Execute the last item
+  shell: '{{ output.msg }}'

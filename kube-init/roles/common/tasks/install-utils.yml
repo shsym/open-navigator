@@ -1,0 +1,56 @@
+## + Confirm the packages
+- name: Get the list of utils rpm pkgs
+  shell: 'ls {{ file_info.dir.base_file }}/{{ file_info.dir.utils }}'
+  register: rpm_utils_pkgs
+
+- name: Print the `rpm_utils_pkgs` register
+  debug: var=rpm_utils_pkgs.stdout_lines
+
+
+- name: Initialize an empty list for making paths
+  set_fact:
+    rpm_utils_pkg_paths: []
+    rpm_utils_pkg_names: []
+
+
+- name: Make utils rpm paths and
+  set_fact:
+    rpm_utils_pkg_paths: "{{ rpm_utils_pkg_paths }} + [ '{{ file_info.dir.base_file }}/{{ file_info.dir.utils }}/{{ item }}' ]"
+    rpm_utils_pkg_names: "{{ rpm_utils_pkg_names }} + [ '{{ item | splitext | first }}' ]"
+  with_items: '{{ rpm_utils_pkgs.stdout_lines }}'
+
+- name: Print `all of utils rpm package paths`
+  debug: var=rpm_utils_pkg_paths
+
+- name: Print `all of utils rpm package names`
+  debug: var=rpm_utils_pkg_names
+
+
+## + Install "all packages"
+- name: Install (Upgrade) "all utility packages"
+  command: "rpm -Uvh {{ file_info.dir.base_file }}/{{ file_info.dir.utils }}/*.rpm --force"
+
+
+## + Code Template
+## + Remove the existing packages
+#- name: Remove `the existing packages` base on the rpm name
+#  yum:
+#    name: "{{ packages }}"
+#    state: absent
+#  vars:
+#    packages: "{{ rpm_utils_pkg_names }}"
+
+## + Install "all packages"
+#- name: Install "all utility packages"
+#  yum:
+#    name: '{{ packages }}'
+#    state: present
+#  vars:
+#    packages: '{{ rpm_utils_pkg_paths }}'
+
+## + Make all of rpm package paths based on `find` module
+#- name: Get the list of utils rpm pkgs
+#  find:
+#    paths: "{{ file_info.dir.base_file }}/{{ file_info.dir.utils }}"
+#    patterns: "*.rpm"
+#  register: rpm_utils_pkgs_find

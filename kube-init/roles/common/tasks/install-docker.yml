@@ -1,0 +1,51 @@
+## + Confirm the packages
+- name: Get the list of docker rpm pkgs
+  shell: "ls {{ file_info.dir.base_file }}/{{ file_info.dir.docker }}"
+  register: rpm_docker_pkgs
+
+- name: Print the `rpm_utils_pkgs` register
+  debug: var=rpm_docker_pkgs.stdout_lines
+
+
+## + Install the docker packages
+- name: Install "all docker packages"
+  shell: "rpm -Uvh {{ file_info.dir.base_file }}/{{ file_info.dir.docker }}/*.rpm --force"
+
+
+## + Set "enable" and "start" by using systemctl
+- name: Start docker service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+
+## + Prune the existing docker system
+- name: "Remove the existing processes / images / volumes / network"
+  shell: "docker container prune --force"
+- shell: "docker image prune --force"
+- shell: "docker volume prune --force"
+- shell: "docker network prune --force"
+
+
+## + Create docker daemon configuration
+- name: Create `daemon.json`
+  copy:
+    dest: "/etc/docker/daemon.json"
+    content: |
+      {
+        "insecure-registries" : [ "{{ registry_ip }}:{{ registry_port }}" ]
+      }
+  notify: restart docker
+  when: registry_ip is defined
+
+
+## + Code Template
+## + Remove the existing docker packages
+#- name: "Remove `the existing docker service`"
+#  shell: "rpm -qa | grep docker"
+#  register: rpm_docker_pkgs
+#- name: "Print the `rpm_docker_pkgs`"
+#  debug: var=rpm_docker_pkgs
+#- shell: "rpm -e {{ item }} --nodeps --allmatches"
+#  with_items: "{{ rpm_docker_pkgs.stdout_lines }}"

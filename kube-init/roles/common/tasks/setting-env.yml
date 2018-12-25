@@ -1,0 +1,17 @@
+## SET COMMON (TIME, ...)
+- include_tasks: tasks/setting-common.yml
+
+## SET HOSTNAME
+- include_tasks: tasks/setting-hostname.yml
+  vars:
+    path: /etc/hosts
+    string: "{{ ip }} {{ hostname }}"
+
+## SET KERNEL PARAMETER
+- include_tasks: tasks/setting-kernel.yml
+
+## FIREWALL SETTING
+- include_tasks: tasks/setting-firewall.yml
+
+## SET Dirs and files in /tmp/epp-installation
+- include_tasks: tasks/setting-files.yml

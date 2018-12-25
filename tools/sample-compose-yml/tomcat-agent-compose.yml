@@ -1,0 +1,18 @@
+version: '3.2'
+services:
+  epp-tomcat-agent:
+    container_name: epp-${img_name}-${cont_postfix}${cont_num}
+    image: epp-${from_img_name}:${from_img_ver}
+    user: ${cont_user}
+    command: ${cmd_val}
+    privileged: true
+    ports:
+      - ${host_port}:${cont_port}
+    volumes:
+      - ${vol_from_os_tmp}:${vol_to_os_tmp}
+      - ${vol_from_epp_etc}:${vol_to_epp_etc}
+      - ${vol_from_epp_lib}:${vol_to_epp_lib}
+      - ${vol_from_epp_java}:${vol_to_epp_java}
+      - ${vol_from_epp_log}:${vol_to_epp_log}
+      - ${vol_from_tomcat_conf}:${vol_to_tomcat_conf}
+      - ${vol_from_log}:${vol_to_log}

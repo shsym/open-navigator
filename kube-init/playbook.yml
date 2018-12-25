@@ -1,0 +1,45 @@
+---
+# [ 1. MASTER ]
+- hosts: vagrant-master
+  
+  ## SETTING
+  serial: 1
+  become: yes
+  any_errors_fatal: true
+
+  ## ROLES
+  roles:
+    - role: common
+    - role: master
+
+  ## VARS
+  vars:
+    ansible_user: "{{ user }}"
+    ansible_ssh_pass: "{{ user_pw }}"
+    ansible_become_pass: "{{ su_pw }}"
+    registry_port: "5000"
+  vars_files:
+    - vars/common.yml
+
+
+# [ 2. NODE ]
+- hosts: vagrant-node
+  
+  ## SETTING
+  strategy: free
+  become: yes
+  any_errors_fatal: true
+
+  ## ROLES
+  roles:
+    - role: common
+    - role: node
+
+  ## VARS
+  vars:
+    ansible_user: "{{ user }}"
+    ansible_ssh_pass: "{{ user_pw }}"
+    ansible_become_pass: "{{ su_pw }}"
+    registry_port: "5000"
+  vars_files:
+    - vars/common.yml

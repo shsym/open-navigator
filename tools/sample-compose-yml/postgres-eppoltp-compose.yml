@@ -1,0 +1,13 @@
+version: '3.2'
+services:
+  epp-postgres-eppoltp:
+    container_name: epp-${img_name}-${target_type}-${cont_postfix}${cont_num}
+    image: epp-${img_name}:${img_ver}
+    user: ${cont_user}
+    command: ${cmd_val}
+    privileged: true
+    ports:
+      - ${host_port}:${cont_port}
+    volumes:
+      - ${vol_from_os_tmp}:${vol_to_os_tmp}
+      - ${vol_from_db}:${vol_to_db}

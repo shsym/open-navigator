@@ -1,0 +1,26 @@
+- name: Make dirs and files
+  file: "path={{ item }} state=directory"
+  with_items:
+    - "{{ file_info.dir.base_file }}"
+    - "{{ file_info.dir.base_registry }}"
+
+
+- name: Copy rpm files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ file_info.dir.base }}"
+  with_items:
+    - "{{ role_path }}/files/{{ file_info.archive.image }}"
+    - "{{ role_path }}/files/{{ file_info.archive.package }}"
+    - "{{ role_path }}/files/{{ file_info.archive.config }}"
+
+
+- name: Unarchive packages and images
+  unarchive:
+    src: "{{ item }}"
+    dest: "{{ file_info.dir.base_file }}"
+    remote_src: yes
+  with_items:
+    - "{{ file_info.dir.base }}/{{ file_info.archive.image }}"
+    - "{{ file_info.dir.base }}/{{ file_info.archive.package }}"
+    - "{{ file_info.dir.base }}/{{ file_info.archive.config }}"

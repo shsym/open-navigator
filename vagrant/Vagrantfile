@@ -1,0 +1,50 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.a
+
+## Variables
+VAGRANTFILE_API_VERSION = "2"
+NODE_COUNT = 4
+
+cluster = {
+  "master" => { :ip => "192.200.10.10", :cpus => 2, :mem => 2048, :port => 1 },
+  "node1" => { :ip => "192.200.10.11", :cpus => 2, :mem => 2048, :port => 2 },
+  "node2" => { :ip => "192.200.10.12", :cpus => 2, :mem => 2048, :port => 3 },
+  "node3" => { :ip => "192.200.10.13", :cpus => 2, :mem => 2048, :port => 4 }  
+#  "master" => { :ip => "192.200.10.10", :cpus => 1, :mem => 1024, :port => 1 },
+#  "node1" => { :ip => "192.200.10.11", :cpus => 1, :mem => 1024, :port => 2 }
+#  "node2" => { :ip => "192.200.10.12", :cpus => 1, :mem => 1024, :port => 3 },
+#  "node3" => { :ip => "192.200.10.13", :cpus => 1, :mem => 1024, :port => 4 }
+}
+
+## Exec configuration
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = "centos/7"
+  #config.vm.box_url = "file:///Users/pokerfksh/dev/kubernetes/CentOS-7-x86_64-Vagrant-1809_01.VirtualBox.box"
+  config.vm.synced_folder "~/files/vagrant", "/vagrant"
+
+  # Setting
+  # always use Vagrants insecure key
+  config.ssh.insert_key = false
+  # forward ssh agent to easily ssh into the different machines
+  config.ssh.forward_agent = true
+
+  check_guest_additions = false
+  functional_vboxsf = false
+
+  cluster.each do |name, info|
+    config.vm.define name do |machine|
+      machine.vm.network :private_network, :dev => "eth0", ip: info[:ip]
+      machine.vm.network "forwarded_port", guest: 80, host: "880#{info[:port]}"
+      machine.vm.provider "virtualbox" do |vb|
+        vb.name = name
+        vb.customize ["modifyvm", :id, "--memory", info[:mem]]
+        vb.customize ["modifyvm", :id, "--cpus", info[:cpus]]
+      end
+    end
+  end
+end

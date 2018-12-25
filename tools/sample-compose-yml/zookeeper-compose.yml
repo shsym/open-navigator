@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  epp-zookeeper:
+    container_name: epp-${img_name}-${cont_postfix}${cont_num}
+    image: epp-${img_name}:${img_ver}
+    user: ${cont_user}
+    command: ${cmd_val}
+    privileged: true
+    ports:
+      - ${host_service_port}:${cont_service_port}
+      - ${host_server1_port}:${cont_server1_port}
+      - ${host_server2_port}:${cont_server2_port}
+    volumes:
+      - ${vol_from_os_tmp}:${vol_to_os_tmp}
+      - ${vol_from_epp_etc}:${vol_to_epp_etc}
+      - ${vol_from_epp_lib}:${vol_to_epp_lib}
+      - ${vol_from_epp_java}:${vol_to_epp_java}
+      - ${vol_from_epp_log}:${vol_to_epp_log}
+      - ${vol_from_conf}:${vol_to_conf}
+      - ${vol_from_data}:${vol_to_data}
+      - ${vol_from_log}:${vol_to_log}
