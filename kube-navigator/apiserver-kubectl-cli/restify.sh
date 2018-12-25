@@ -1,7 +1,7 @@
 #!/bin/sh
 
-NODE_BIN=/opt/ahnlab/epp/nodejs/node
-APP_JS=/opt/ahnlab/epp/restify/server.js
+NODE_BIN=/opt/nodejs/node
+APP_JS=/opt/restify/server.js
 
 
 _stop( ) {

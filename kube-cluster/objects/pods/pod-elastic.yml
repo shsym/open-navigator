@@ -22,7 +22,7 @@ spec:
   volumes:
     - name: storage-db-es
       hostPath:
-        path: /opt/ahnlab/epp/elasticsearch-6.2.2
+        path: /opt/elasticsearch-6.2.2
         type: Directory
     - name: localtime
       hostPath:

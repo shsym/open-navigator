@@ -19,10 +19,10 @@
     "type": "svn",
     "url": ""
   },
-  "author": "SungHyun Kim <sunghyun.kim03@ahnlab.com>",
+  "author": "becleverksh <becleverksh@gmail.com>",
   "bugs": {
     "url": "",
-    "email": "sunghyun.kim03@ahnlab.com"
+    "email": "becleverksh@gmail.com"
   },
   "dependencies": {
     "async": "^2.6.0",
